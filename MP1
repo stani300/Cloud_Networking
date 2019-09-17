@@ -1,0 +1,44 @@
+/*
+** client.c -- a stream socket client demo
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+
+#include <arpa/inet.h>
+
+int main (){
+
+
+    //Create the socket
+    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if(sockfd == -1){
+    	printf("Error creating the socket");
+    	return 1;
+    }
+
+    int addrlen = sizeof(struct sockaddr_in);
+
+    struct sockaddr_in* servaddr; // presents the end point (ip and port number)
+
+    servaddr->sin_port = 80;
+    servaddr->sin_family = AF_INET;
+    servaddr->sin_addr.s_addr = inet_addr ("172.217.3.100"); //www.google.com
+    connect (sockfd, (struct sockaddr *)servaddr, addrlen); //connect to real IP Address
+    char* web =  "GET /test.txt HTTP/1.1\r\nUser-Agent: Wget/1.15 (linux-gnu)\r\nAccept: */*\r\nHost: www.google.com:80\r\nConnection: Keep-Alive\r\n\r\n";
+    send(sockfd,web,strlen(web), 0);
+    char buf [2056];
+    recv(sockfd, buf, sizeof(buf), 0);
+    printf("%s",buff);
+    
+   
+
+	return 0;
+}
