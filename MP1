@@ -28,7 +28,7 @@ int main (){
 
     struct sockaddr_in* servaddr; // presents the end point (ip and port number)
 
-    servaddr->sin_port = 80;
+    servaddr->sin_port = htons(80);
     servaddr->sin_family = AF_INET;
     servaddr->sin_addr.s_addr = inet_addr ("172.217.3.100"); //www.google.com
     connect (sockfd, (struct sockaddr *)servaddr, addrlen); //connect to real IP Address
@@ -36,7 +36,7 @@ int main (){
     send(sockfd,web,strlen(web), 0);
     char buf [2056];
     recv(sockfd, buf, sizeof(buf), 0);
-    printf("%s",buff);
+    printf("%s",buf);
     
    
 
